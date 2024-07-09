@@ -21,19 +21,19 @@ import { users, posts } from "./data/index.js";
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config();
+dotenv.config(); // Load environment variables from .env file
 const app = express();
+
+// Middleware
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors({
-  origin:["https://share-net-front-end.vercel.app/"],
-  methods:["GET","POST","PUT","DELETE"],
-  credentials:true
-}));
+app.use(cors());
+
+// Static assets (e.g., images)
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 /* FILE STORAGE */
@@ -48,6 +48,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 /* ROUTES WITH FILES */
+// Example route handling file upload
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
@@ -64,10 +65,11 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    app.listen(PORT, () => console.log(`Server running on Port: ${PORT}`));
 
-     //ADD DATA ONE TIME */
-     User.insertMany(users);
-     Post.insertMany(posts);
+    // Uncomment if you want to insert data initially
+    // User.insertMany(users);
+    // Post.insertMany(posts);
   })
-  .catch((error) => console.log(`${error} did not connect`));
+  .catch((error) => console.error(`MongoDB connection error: ${error}`));
+
