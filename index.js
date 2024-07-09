@@ -34,8 +34,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors({
   origin:["https://share-net-front-end.vercel.app/"],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials:true
-            ));
+  credentials:true,
+          }));
 
 // Static assets (e.g., images)
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
