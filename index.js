@@ -24,10 +24,10 @@ const __dirname = path.dirname(__filename);
 dotenv.config(); // Load environment variables from .env file
 const app = express();
 app.use(cors({
-  origin:["https://share-net-front-end.vercel.app"],
+  origin: ["https://share-net-front-end.vercel.app"],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials:true,
-          }));
+  credentials: true,
+}));
 // Middleware
 app.use(express.json());
 app.use(helmet());
