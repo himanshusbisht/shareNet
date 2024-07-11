@@ -1,5 +1,14 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "src": "/auth/register", "dest": "/src/routes/auth/register.js" },
+    { "src": "/posts", "dest": "/src/routes/posts/index.js" },
+    { "src": "/(.*)", "dest": "/src/index.js" }
   ]
 }
