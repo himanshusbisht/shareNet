@@ -23,19 +23,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config(); // Load environment variables from .env file
 const app = express();
+
+// Middleware
 app.use(cors({
   origin: ["https://share-net-front-end.vercel.app"],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
-// Middleware
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-// app.use(cors());
 
 // Static assets (e.g., images)
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
@@ -76,4 +76,3 @@ mongoose
     // Post.insertMany(posts);
   })
   .catch((error) => console.error(`MongoDB connection error: ${error}`));
-
